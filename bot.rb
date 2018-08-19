@@ -132,7 +132,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Spanish', callback_data: 'spanish')
       ]
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
-      bot.api.send_message(chat_id: message.chat.id, text: 'Hello #{message.from.first_name}! Please, choose language you need', reply_markup: markup)
+      bot.api.send_message(chat_id: message.chat.id, text: 'Hello! Please, choose language you need', reply_markup: markup)
     end
   end
 end
