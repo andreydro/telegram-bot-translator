@@ -1,0 +1,37 @@
+numbers_and_money_data:
+  - zero - zero
+  - one - un
+  - two - deux
+  - three - trois
+  - four - quatre
+  - five - cinq
+  - six - six
+  - seven - sept
+  - eight - huit
+  - nine - neuf
+  - ten - dix
+  - eleven - onze
+  - twelve - douze
+  - thirteen - treize
+  - fourteen - quatorze
+  - fifteen - quinze
+  - sixteen - seize
+  - seventeen - dix-sept
+  - eighteen - dix-huit
+  - nineteen - dix-neuf
+  - twenty - vingt
+  - thirty - trente
+  - forty - quarante
+  - fifty - cinquante
+  - sixty - soixante
+  - seventy - soixante-dix
+  - eighty - quatre-vingts
+  - ninety - qutre-vingt-dix
+  - hundred - cent
+  - million - million
+  - billion - milliard
+  - Do you accepty __ ?  - Acceptez-vous __?
+  - __ credit cards?  - les cartes de credit?
+  - __ debit cards ?  - les cartes a debit immadiat?
+  - __ cash?  - __l'espece?
+  - __ checks? - __les cheques?

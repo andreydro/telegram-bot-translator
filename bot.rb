@@ -5,30 +5,11 @@ require "ohm"
 
 TOKEN = '684307416:AAGNnNrsbMxQdX9JyCjKLC2qHo0f71XH7jo'
 
-
-
-class User < Ohm::Model
-  attribute :language
-  attribute :name
-end
-
-User.redis = Redic.new('redis://127.0.0.1:6379/0')
-
 Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
-   
-    # binding.pry
-    def authenticate_user(message)
-      @user = User.create(name: "#{message.from.first_name}_#{message.from.last_name}", language: 'french')
-    end
-
-    authenticate_user(message)
-
-   # binding.pry
     case message
-
     when Telegram::Bot::Types::CallbackQuery
-      # 2 main featrures
+
       if message.data == 'french'
         kb = [
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Travel', callback_data: 'travel_fr'),
@@ -56,37 +37,92 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       end
 
        if message.data == 'shopping_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
+         data = YAML.load_file('./fr/shopping_fr.yml').each { |e| e[e.length+1] = '\n' } 
+
+        bot.api.send_message(chat_id: message.from.id, text: data['shopping_data'].join(",\n"))
+      end
+
+      if message.data == 'accommodation_fr'
+         data = YAML.load_file('./fr/accommodation_fr.yml').each { |e| e[e.length+1] = '\n' } 
+
+        bot.api.send_message(chat_id: message.from.id, text: data['accommodation_data'].join(",\n"))
+      end
+
+       if message.data == 'eating_out_fr'
+         data = YAML.load_file('./fr/eating_out_fr.yml').each { |e| e[e.length+1] = '\n' } 
+
+        bot.api.send_message(chat_id: message.from.id, text: data['eating_out_data'].join(",\n"))
+      end
+
+       if message.data == 'numbers_and_money_fr'
+       data = YAML.load_file('./fr/numbers_and_money_fr.yml').each { |e| e[e.length+1] = '\n' } 
+
+        bot.api.send_message(chat_id: message.from.id, text: data['numbers_and_money_data'].join(",\n"))
+      end
+
+      if message.data == 'german'
+        kb = [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings_de'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'General Conversation', callback_data: 'gen_conversation_de'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Directions and Places', callback_data: 'dir_plac_de'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Accommodation', callback_data: 'accommodation_de'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Eating Out', callback_data: 'eating_out_de'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Shopping', callback_data: 'shopping_de')
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: "Choose category", reply_markup: markup)
       end
 
-      if message.data == 'bussiness_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
+      if message.data == 'greetings_de'
+        data = YAML.load_file('./de/greetings_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'gen_conversation_de'
+        data = YAML.load_file('./de/gen_conversation_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'dir_plac_de'
+        data = YAML.load_file('./de/dir_plac_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'accommodation_de'
+        data = YAML.load_file('./de/accommodation_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'eating_out_de'
+        data = YAML.load_file('./de/eating_out_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'shopping_de'
+        data = YAML.load_file('./de/shopping_de.yml').each { |e| e[e.length+1] = '\n' }
+
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
+      end
+
+      if message.data == 'spanish'
+        kb = [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings_es')
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: "Choose category", reply_markup: markup)
       end
 
-       if message.data == 'academic_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
-          ]
-        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+      if message.data == 'greetings_es'
+        data = YAML.load_file('./es/greetings_es.yml').each { |e| e[e.length+1] = '\n' }
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
-      end
-
-       if message.data == 'immigration_fr'
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: data['greetings_data'].join(",\n"))
       end
 
     when Telegram::Bot::Types::Message
