@@ -1,5 +1,6 @@
 require 'telegram/bot'
 require 'pry'
+require 'yaml'
 require "ohm"
 
 TOKEN = '684307416:AAGNnNrsbMxQdX9JyCjKLC2qHo0f71XH7jo'
@@ -32,10 +33,10 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         kb = [
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Travel', callback_data: 'travel_fr'),
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Personal', callback_data: 'personal_fr'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Application', callback_data: 'application_fr'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bussiness', callback_data: 'bussiness_fr'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Academic', callback_data: 'academic_fr'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Immigration', callback_data: 'immigration_fr')
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Shopping', callback_data: 'shopping_fr'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Accommodation', callback_data: 'accommodation_fr'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Eating Out', callback_data: 'eating_out_fr'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Numbers and Money', callback_data: 'numbers_and_money_fr')
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
@@ -43,26 +44,18 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       end
 
       if message.data == 'travel_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
-          ]
-        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+        data = YAML.load_file('./fr/travel_fr.yml').each { |e| e[e.length+1] = '\n' }
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: data['travel_data'].join(",\n"))
       end
 
        if message.data == 'personal_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
-          ]
-        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+        data = YAML.load_file('./fr/personal_fr.yml').each { |e| e[e.length+1] = '\n' } 
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: data['personal_data'].join(",\n"))
       end
 
-       if message.data == 'application_fr'
+       if message.data == 'shopping_fr'
          kb = [
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
@@ -93,12 +86,6 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       end
 
        if message.data == 'immigration_fr'
-         kb = [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Greetings', callback_data: 'greetings'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Introduction', callback_data: 'introduction')
-          ]
-        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
-
         bot.api.send_message(chat_id: message.from.id, text: "Choose topic", reply_markup: markup)
       end
 
