@@ -21,7 +21,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose category", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: "Choose the category", reply_markup: markup)
       end
 
       if message.data == 'travel_fr'
@@ -71,7 +71,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose category", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: "Choose the category", reply_markup: markup)
       end
 
       if message.data == 'greetings_de'
@@ -116,7 +116,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
           ]
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
 
-        bot.api.send_message(chat_id: message.from.id, text: "Choose category", reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: "Choose the category", reply_markup: markup)
       end
 
       if message.data == 'greetings_es'
@@ -132,13 +132,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Spanish', callback_data: 'spanish')
       ]
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
-      bot.api.send_message(chat_id: message.chat.id, text: 'Please, choose language you want to use', reply_markup: markup)
-
-    when '/help'
-      bot.api.sendMessage(
-        chat_id: message.chat.id,
-        text: "You can use following commands"
-      )
+      bot.api.send_message(chat_id: message.chat.id, text: 'Hello #{message.from.first_name}! Please, choose language you need', reply_markup: markup)
     end
   end
 end
